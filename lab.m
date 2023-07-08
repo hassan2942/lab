@@ -231,6 +231,7 @@ end
 
 
 
+
 A = imread('lungcancer.PNG');
 
 imhist(A)
@@ -254,6 +255,56 @@ imshow(BW3)
 BW4 = imdilate(BW3,SE);
 imshow(BW4)
 
+%face detection 
+
+Face Detection:
+faceDetector = vision.CascadeObjectDetector; 
+I = imread('C:\Users\19b-006-cs\Desktop\Team.jpg'); 
+bboxes = step(faceDetector, I); 
+IFaces = insertObjectAnnotation(I, 'rectangle', bboxes, 'Face'); 
+figure, imshow(IFaces), title('Detected faces'); 
 
 
+faceDetector = vision.CascadeObjectDetector; 
+I = imread('C:\Users\19b-006-cs\Desktop\friend.png'); 
+bboxes = step(faceDetector, I); 
+IFaces = insertObjectAnnotation(I, 'rectangle', bboxes, 'Face'); 
+figure, imshow(IFaces), title('Detected faces'); 
+
+
+bodyDetector = vision.CascadeObjectDetector('UpperBody');
+ bodyDetector.MinSize = [60 60];
+ bodyDetector.MergeThreshold = 10;
+ I2 = imread('C:\Users\19b-006-cs\Desktop\Team.jpg');
+ bboxBody = step(bodyDetector, I2);
+IBody = insertObjectAnnotation(I2, 'rectangle',bboxBody,'Upper Body');
+ figure, imshow(IBody), title('Detected upper bodies');
+
+
+
+
+%lab 12
+
+myimageA=imread('ImageA.png');
+myimageadjustA=imresize(myimageA,[256,256]);
+mybinaryimageA = im2bw(myimageadjustA);
+subplot(4,2,1)
+imshow(mybinaryimageA),title('Binary Image - Image A ');
+myimageB=imread('ImageB.png');
+myimageadjustB =imresize(myimageB,[256,256]);
+mybinaryimageB = im2bw(myimageadjustB);
+subplot(4,2,2)
+imshow(mybinaryimageB),title('Binary Image - Image B');
+subplot(4,2,3)
+resultor = ~mybinaryimageA;
+imshow(mat2gray(resultor)), title('Complement of Image A1')
+subplot(4,2,4)
+resultxor= xor(mybinaryimageA,mybinaryimageB);
+imshow(mat2gray(resultxor)), title('Image A XOR Imo Image A OR Image B')
+subplot(4,2,5)
+resultor= mybinaryimageA | mybinaryimageB;
+imshow(mat2gray(resultor)), title('Image A OR Imag€ Image A AND Image B')
+subplot(4,2,6)
+resultand= mybinaryimageA & mybinaryimageB;
+imshow(mat2gray(resultand)), title('Image A AND Image B ');
 
